@@ -25,21 +25,5 @@ class ApplicationController < ActionController::Base
     user.nausea += attraction.nausea_rating
   end
 
-  def take_ride
-    if (user.tickets < attraction.tickets) && (user.height < attraction.min_height)
-      flash[:notice] = "Sorry. You do not have enought tickets to ride the #{attraction.name}."
-    elsif user.tickets < attraction.tickets
-      flash[:notice] = "Sorry. You do not have enought tickets to ride the #{attraction.name}."
-    elsif user.height < attraction.min_height
-      flash[:notice] = "Sorry. You are not tall enought to ride the #{attraction.name}."
-    else
-      pay_tickets(user, attraction)
-      update_mood(user, attraction)
-      if !user.password
-        user.password = SecureRandom.hex
-      end
-      user.save
-      flash[:notice] = "Thanks for riding the #{attraction.name}!"
-    end
-  end
+  
 end

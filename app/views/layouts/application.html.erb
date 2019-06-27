@@ -18,10 +18,17 @@
             <span class="icon-bar"></span>
           </button>
         <a class="navbar-brand" href="<%= root_url %>"/>Home</a>
+        <% if !logged_in? %>
+          <a class="navbar-brand" href="<%= signin_url %>"/>Sign Up</a>
+          <a class="navbar-brand" href="<%= 'users/new' %>"/>Log In</a>
+        <% else %>
+          <a class="navbar-brand" href="<%= '/users/show' %>"/><%= current_user.name %>'s profile</a>
+          <%= link_to 'Log Out', logout_path, class: "navbar-brand", method: :delete %>
+        <% end %>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            
+
           </ul>
         </div><!--/.nav-collapse -->
       </div>

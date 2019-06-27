@@ -1,0 +1,23 @@
+<h1>Listing attractions</h1><br>
+
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Tickets</th>
+    <th>Details</th>
+  </tr>
+  <% @attractions.each do |attr| %>
+    <tr>
+      <td><%= attr.name %></td>
+      <td><%= attr.tickets %></td>
+      <% if !@user.admin %>
+        <td> <%= link_to "Go on #{attr.name}", attraction_path(attr) %></td>
+      <% else %>
+        <td><%= link_to "Show #{attr.name}", attraction_path(attr) %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table><br>
+
+<%= link_to 'New Attraction', new_attraction_path %>

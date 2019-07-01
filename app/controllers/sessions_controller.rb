@@ -5,13 +5,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if params[:name].nil? || params[:name].empty?
-      redirect_to '/signin'
+     user = User.find_by(name: params[:user][:name])
+    if user && user.authenticate(params[:user][:password])
+      log_in user
+      redirect_to user
     else
-      raise params.inspect
-      @user = User.find(params[:id])
-      session[:name] = params[:name]
-      redirect_to '/'
+      flash.now[:danger] = 'Invalid email/password combination'
+      render 'new'
     end
   end
 

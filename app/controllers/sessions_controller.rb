@@ -5,10 +5,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-     user = User.find_by(name: params[:user][:name])
-    if user && user.authenticate(params[:user][:password])
-      log_in user
-      redirect_to user
+    @user = User.find_by(name: params[:user][:name])
+    if @user && @user.authenticate(params[:password])
+      log_in(@user)
+      redirect_to @user
     else
       flash.now[:danger] = 'Invalid email/password combination'
       render 'new'
@@ -16,7 +16,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session.delete :name
+    session.delete :user_id
+    redirect_to '/'
   end
 
   def home

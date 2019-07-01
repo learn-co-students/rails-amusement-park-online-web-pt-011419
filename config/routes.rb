@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :rides
   resources :users
-  resources :attractions
+  resources :attractions do
+    resources :users
+  end
   root to: "users#home"
   get '/signin' => 'sessions#new'
   post '/signin' => 'sessions#create'

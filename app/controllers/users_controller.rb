@@ -6,10 +6,13 @@ class UsersController < ApplicationController
   end
 
   def create
-   @user = User.create(user_params)
-   return redirect_to controller: 'users', action: 'new' unless @user.save
-   session[:user_id] = @user.id
-   redirect_to @user
+    @user = User.new(user_params)
+     if @user.save
+       session[:user_id] = @user.id
+       redirect_to user_path(@user)
+     else
+       render root_path
+     end
   end
 
   def show
@@ -17,6 +20,28 @@ class UsersController < ApplicationController
   end
 
   def home
+
+  end
+
+  def update
+    user = User.find(params[:id])
+    attraction = Attraction.find(params[:attraction_id])
+    ride = Ride.new(user_id: user.id, attraction_id: attraction.id)
+    if (user.height < attraction.min_height) && (user.tickets < attraction.tickets)
+      flash[:notice] = "Sorry. You are not tall enough to ride the #{attraction.name}. You do not have enough tickets to ride the #{attraction.name}."
+      redirect_to user
+    elsif user.height < attraction.min_height
+      flash[:notice] = "Sorry. You are not tall enough to ride the #{attraction.name}."
+      redirect_to user
+    elsif user.tickets < attraction.tickets
+      flash[:notice] = "You do not have enough tickets to ride the #{attraction.name}."
+      redirect_to user
+    else
+      ride.take_ride
+      user.save
+      flash[:notice] = "Thanks for riding the #{attraction.name}!"
+      redirect_to user
+    end
 
   end
 

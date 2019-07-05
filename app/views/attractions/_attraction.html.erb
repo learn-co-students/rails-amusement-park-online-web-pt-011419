@@ -1,0 +1,11 @@
+
+<p>Name:
+  <% if !@user.admin %>
+    <%= attraction.name %>, <%= link_to "Go on #{attraction.name}", attraction_path(attraction) %></p>
+  <% else %>
+    <%= link_to "Show #{attraction.name}", attraction_path(attraction) %>
+   <% end %> 
+<p>Ticket Cost: <%= attraction.tickets %></p>
+<p>Minimum Height to ride: <%= attraction.min_height %></p>
+<p>Nausea Rating: <%= attraction.nausea_rating %></p>
+<p>Happiness Rating: <%= attraction.happiness_rating%></p>

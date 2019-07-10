@@ -1,0 +1,15 @@
+Sign Up:
+
+<%= form_for @user do |u| %>
+    Name: <%= u.text_field :name %><br>
+    Password: <%= u.password_field :password %><br><br><br>
+
+    Height: <%= u.number_field :height %><br><br>
+    Tickets: <%= u.number_field :tickets %><br><br>
+    Happiness Level: <%= u.number_field :happiness %><br><br>
+    Nausea Level: <%= u.number_field :nausea %><br><br>
+    
+    Admin? <%= u.check_box :admin %><br><br><br>
+
+    <%= u.submit 'Create User' %>
+<% end %>
